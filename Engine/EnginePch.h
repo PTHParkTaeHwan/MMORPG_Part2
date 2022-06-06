@@ -43,9 +43,24 @@ using Vec3 = XMFLOAT3;
 using Vec4 = XMFLOAT4;
 using Matrix = XMMATRIX;
 
+enum class CBV_REGISTER
+{
+	b0,
+	b1,
+	b2,
+	b3,
+	b4,
+	END
+};
+
+
+
+
 enum
 {
-	SWAP_CHAIN_BUFFER_COUNT = 2
+	SWAP_CHAIN_BUFFER_COUNT = 2,
+	CBV_REGISTER_COUNT = CBV_REGISTER::END,
+	REGISTER_COUNT = CBV_REGISTER::END,
 };
 
 struct WindowInfo
@@ -55,6 +70,22 @@ struct WindowInfo
 	int32	height;		//높이
 	bool	windowed;	//창 모드 or 전체화면
 };
+
+struct Vertex
+{
+	Vec3 pos;	//x,y,z
+	Vec4 color; //r g b a  
+	///위치와 색을 같이 하는 이유는 각 정점의 색이 다르게 설정될 수 있기 때문에
+};
+
+struct Transform
+{
+	Vec4 offset;
+};
+
+#define DEVICE			GEngine->GetDevice()->GetDevice()
+#define CMD_LIST		GEngine->GetCmdQueue()->GetCmdList()
+#define ROOT_SIGNATURE	GEngine->GetRootSignature()->GetSignature()
 
 extern unique_ptr<class Engine> GEngine; //전방선언
 
